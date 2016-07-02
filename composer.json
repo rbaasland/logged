@@ -11,5 +11,7 @@
         }
     ],
     "minimum-stability": "dev",
-    "require": {}
+    "require": {
+        "phpunit/phpunit": "5.4.*"
+    }
 }
