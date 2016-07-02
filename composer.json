@@ -1,0 +1,15 @@
+{
+    "name": "rbaasland/logged",
+    "description": "PHP package to handle simple logging for development and debugging purposes.",
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^2.6"
+    },
+    "authors": [
+        {
+            "name": "Ron Baasland",
+            "email": "ron.baasland@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
