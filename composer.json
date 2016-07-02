@@ -1,5 +1,5 @@
 {
-    "name": "rbaasland/logged",
+    "name": "rbslnd/logged",
     "description": "PHP package to handle simple logging for development and debugging purposes.",
     "require-dev": {
         "squizlabs/php_codesniffer": "^2.6"
