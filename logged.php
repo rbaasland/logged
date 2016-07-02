@@ -16,7 +16,21 @@ class Logged
         return $this->log_file;
     }
 
-    public function loggedLogFile()
+    public function logDataFile($line, $file, $content)
     {
+        $log = $this->openLoggedFile();
+        fwrite($log, $line);
+        fwrite($log, $line);
+        $this->closeLoggedFile($log);
+    }
+
+    private function openLoggedFile()
+    {
+        return fopen($this->log_file, "w");
+    }
+
+    private function closeLoggedFile($file)
+    {
+        fclose($file);
     }
 }
