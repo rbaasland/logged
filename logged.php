@@ -6,6 +6,8 @@ class Logged
 {
     private $log_file = "logged.log";
 
+    private $query_file = "query.log";
+
     public function setLogFile($log_file)
     {
         $this->log_file = $log_file;
@@ -14,6 +16,14 @@ class Logged
     public function getLogfile()
     {
         return $this->log_file;
+    }
+
+    public function logQuery($line, $file, $query) {
+        $log = $this->openQueryFile();
+        $this->writeData($log, $this->writeHeading($line, $file, 'query'));
+        $this->writeData($log, $query);
+        $this->writeData($log, $this->writeFooter());
+        $this->closeLoggedFile($log);
     }
 
     public function logDataFile($line, $file, $content)
@@ -30,6 +40,11 @@ class Logged
         return fopen($this->log_file, "a");
     }
 
+    private function openQueryFile()
+    {
+        return fopen($this->query_file, "a");
+    }
+
     private function closeLoggedFile($file)
     {
         fclose($file);
@@ -44,11 +59,14 @@ class Logged
         fwrite($log, $content);
     }
 
-    private function writeHeading($line, $file) {
+    private function writeHeading($line, $file, $type = '') {
         $date = new \DateTime();
         $date_output = $date->format('d-m-Y h:i:s a');
         $heading = "";
         $heading .= "****************************************************************************************************\n";
+        if (!empty($type)) {
+            $header .= strtoupper($type) . "\n";
+        }
         $heading .= "Line " . $line . " on " . $file . " at " . $date_output . "\n";
         $heading .= "****************************************************************************************************\n";
         return $heading;
