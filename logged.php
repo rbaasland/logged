@@ -45,12 +45,31 @@ class Logged
      *
      * @return void
      */
+    
+    public function setQueryFile($queryFile)
+    {
+        $this->queryFile = $queryFile;
+    }
+
+    /**
+     *
+     * @return void
+     */
 
     public function getLogfile()
     {
         return $this->logFile;
     }
 
+    /**
+     *
+     * @return void
+     */
+
+    public function getQueryfile()
+    {
+        return $this->queryFile;
+    }
     /**
      *
      * @return void
