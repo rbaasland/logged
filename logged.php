@@ -1,65 +1,131 @@
 <?php
+/**
+ *
+ * @return void
+ */
 
 namespace Logged;
 
+/**
+ *
+ * @return void
+ */
+
 class Logged
 {
-    private $log_file = "logged.log";
+    /**
+     * @var string $_logFile        Default file name for the general log file
+     */
 
-    private $query_file = "query.log";
+    private $_logFile = "logged.log";
 
-    public function setLogFile($log_file)
+    /**
+     * @var string $_queryFile        Default file name for the query log file
+     */
+
+    private $_queryFile = "query.log";
+
+    /**
+     * Change the default log file
+     *
+     * The default file is saved in the root of the project called logged.log.
+     * You can change the default log file name and location.
+     *
+     * @param string $logFile the new name and extension of the basic logged file.
+     *
+     * @return void
+     */
+
+    public function setLogFile($logFile)
     {
-        $this->log_file = $log_file;
+        $this->logFile = $logFile;
     }
+
+    /**
+     *
+     * @return void
+     */
 
     public function getLogfile()
     {
-        return $this->log_file;
+        return $this->logFile;
     }
 
-    public function logQuery($line, $file, $query) {
-        $log = $this->openQueryFile();
-        $this->writeData($log, $this->writeHeading($line, $file, 'query'));
+    /**
+     *
+     * @return void
+     */
+
+    public function logQuery($line, $file, $query) 
+    {
+        $log = $this->_openQueryFile();
+        $this->writeData($log, $this->_writeHeading($line, $file, 'query'));
         $this->writeData($log, $query);
-        $this->writeData($log, $this->writeFooter());
+        $this->writeData($log, $this->_writeFooter());
         $this->closeLoggedFile($log);
     }
+
+    /**
+     *
+     * @return void
+     */
 
     public function logDataFile($line, $file, $content)
     {
-        $log = $this->openLoggedFile();
-        $this->writeData($log, $this->writeHeading($line, $file));
+        $log = $this->_openLoggedFile();
+        $this->writeData($log, $this->_writeHeading($line, $file));
         $this->writeData($log, $content);
-        $this->writeData($log, $this->writeFooter());
+        $this->writeData($log, $this->_writeFooter());
         $this->closeLoggedFile($log);
     }
 
-    private function openLoggedFile()
+    /**
+     *
+     * @return void
+     */
+    private function _openLoggedFile()
     {
-        return fopen($this->log_file, "a");
+        return fopen($this->logFile, "a");
     }
 
-    private function openQueryFile()
+    /**
+     *
+     * @return void
+     */
+    private function _openQueryFile()
     {
-        return fopen($this->query_file, "a");
+        return fopen($this->queryFile, "a");
     }
 
-    private function closeLoggedFile($file)
+    /**
+     *
+     * @return void
+     */
+    private function _closeLoggedFile($file)
     {
         fclose($file);
     }
 
-    private function writeData($log, $content) {
+    /**
+     *
+     * @return void
+     */
+    private function _writeData($log, $content) 
+    {
         if (is_array($content)) {
             $content = $this->prepareArrayOutput($content);
-        } else{
+        } else {
             $content .= PHP_EOL;
         }
         fwrite($log, $content);
     }
 
-    private function writeHeading($line, $file, $type = '') {
+    /**
+     *
+     * @return void
+     */
+    private function _writeHeading($line, $file, $type = '') 
+    {
         $date = new \DateTime();
         $date_output = $date->format('d-m-Y h:i:s a');
         $heading = "";
@@ -72,17 +138,32 @@ class Logged
         return $heading;
     }
 
-    private function writeFooter() {
+    /**
+     *
+     * @return void
+     */
+    private function _writeFooter() 
+    {
         $footer = "\n\n";
         return $footer;
     }    
 
-    public function clearLoggedFile() {
-        $log = fopen($this->log_file, 'w' );
+    /**
+     *
+     * @return void
+     */
+    public function clearLoggedFile() 
+    {
+        $log = fopen($this->logFile, 'w');
         fclose($log);
     }
 
-    private function prepareArrayOutput($content) {
+    /**
+     *
+     * @return void
+     */
+    private function _prepareArrayOutput($content) 
+    {
         ob_start();
         print_r($content);
         $output = ob_get_contents();
